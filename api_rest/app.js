@@ -1,3 +1,3 @@
-
-const teste = 22;
-console.log(teste);
+export default () => {
+  console.log('ola Mundo!');
+};
