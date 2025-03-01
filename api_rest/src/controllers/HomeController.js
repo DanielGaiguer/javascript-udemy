@@ -3,12 +3,12 @@ import Aluno from '../models/Aluno';
 class HomeController {
   async index(req, res) {
     const novoAluno = await Aluno.create({
-      nome: 'Daniel',
-      sobrenome: 'Gaiguer',
-      email: 'gaiguer2019@gmail.com',
-      idade: 16,
-      peso: 64,
-      altura: 1.70,
+      nome: 'Tailene',
+      sobrenome: 'Mello',
+      email: 'gaiguer2015@gmail.com',
+      idade: 14,
+      peso: 47,
+      altura: 1.58,
     });
     res.json(novoAluno);
   }
