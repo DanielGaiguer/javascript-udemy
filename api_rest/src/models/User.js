@@ -6,7 +6,7 @@ export default class User extends Model {
     super.init({
       nome: {
         type: Sequelize.STRING,
-        defaulValue: '',
+        defaultValue: '',
         validate: {
           len: {
             args: [3, 255],
@@ -16,7 +16,7 @@ export default class User extends Model {
       },
       email: {
         type: Sequelize.STRING,
-        defaulValue: '',
+        defaultValue: '',
         unique: {
           msg: 'Email ja existe',
         },
@@ -28,11 +28,11 @@ export default class User extends Model {
       },
       password_hash: {
         type: Sequelize.STRING,
-        defaulValue: '',
+        defaultValue: '',
       },
       password: {
         type: Sequelize.VIRTUAL,
-        defaulValue: '',
+        defaultValue: '',
         validate: {
           len: {
             args: [6, 50],
@@ -45,7 +45,7 @@ export default class User extends Model {
     });
 
     this.addHook('beforeSave', async (user) => {
-      user.password_hash = await bcryptjs.hash(user.password, 8);
+      user.password_hash = await bcryptjs.hash(String(user.password), 8);
     });
 
     return this;
