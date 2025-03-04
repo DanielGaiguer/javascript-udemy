@@ -9,14 +9,14 @@ export default (req, res, next) => {
     });
     }
 
-    const [ texto, token ] = authorization.split(' ');
+    const [, token ] = authorization.split(' ');
 
     try{
       const dados = jwt.verify(token, process.env.TOKEN_SECRET);
       const { id, email } = dados;
       req.userId = id;
       req.userEmail = email;
-      return next(); 
+      return next();
     }catch(e){
       return res.status(401).json({
         errors: [`token expirado ou invalido.`]
