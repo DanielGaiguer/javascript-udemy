@@ -14,7 +14,6 @@ export default class Main extends Component{
   }
 
   render(){
-    const{ novaTarefa } = this.state;
     return (
       <div className="main">
         <h1>Lista de Tarefas </h1>
