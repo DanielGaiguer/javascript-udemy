@@ -14,6 +14,13 @@ export default class Main extends Component{
     tarefas: [],
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { tarefas } = this.state;
+    if (tarefas === prevState.tarefas) return;
+
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { tarefas, index } = this.state;
