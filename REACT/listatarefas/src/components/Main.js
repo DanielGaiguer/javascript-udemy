@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import './Main.css';
 import Tarefas from './Tarefas';
 
-//Tarefas
-
 import Form from './Form';
 
 export default class Main extends Component{
