@@ -18,7 +18,7 @@ export default class Main extends Component{
     this.setState({ tarefas });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {//entender
     const { tarefas } = this.state;
     if (tarefas === prevState.tarefas) return;
 
@@ -31,7 +31,7 @@ export default class Main extends Component{
     let { novaTarefa } = this.state;
     novaTarefa = novaTarefa.trim();
 
-    if (tarefas.indexOf(novaTarefa) !== -1 ) return;
+    if (tarefas.indexOf(novaTarefa) !== -1 ) return;//rettirar
 
     const novasTarefas = [...tarefas];
 
