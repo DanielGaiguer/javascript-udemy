@@ -10,19 +10,21 @@ export default class Main extends Component{
     tarefas: [],
   };
 
-  componentDidMount(){
-    const tarefas = JSON.parse(localStorage.getItem('tarefas'));
+  componentDidMount(){//Ele é chamado automaticamente logo após o componente ser montado no DOM.
+    const tarefas = JSON.parse(localStorage.getItem('tarefas'));//Vai pegar  o item 'tarefas' do localStorage e convertê-lo de volta para um objeto JavaScript.
 
-    if (!tarefas) return
+    if (!tarefas) return;
 
-    this.setState({ tarefas });
+    this.setState({ tarefas });//Vai setar o estado recuperado do localstorage
   }
 
-  componentDidUpdate(prevProps, prevState) {//entender
+  componentDidUpdate(prevProps, prevState) {//é um método de ciclo de vida em componentes de classe do React que é chamado logo após uma atualização (quando props ou state mudam).
+    //PrevProps e o valor das propriedades antes da atualizacao
+    //PrevState e o valor do estado antes da atualizacao
     const { tarefas } = this.state;
     if (tarefas === prevState.tarefas) return;
 
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));//Vai setar as tarefas no localstorage, convertendo o array de tarefas em uma string JSON, o tarefas em parenteses e o nome do item que queremos setar no localstorage.
   };
 
   handleSubmit = (e) => {
