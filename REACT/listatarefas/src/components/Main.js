@@ -33,7 +33,7 @@ export default class Main extends Component{
     let { novaTarefa } = this.state;
     novaTarefa = novaTarefa.trim();
 
-    if (tarefas.indexOf(novaTarefa) !== -1 ) return;//retirar
+    if (tarefas.indexOf(novaTarefa) !== -1 ) return;//rettirar
 
     const novasTarefas = [...tarefas];
 
@@ -51,6 +51,7 @@ export default class Main extends Component{
         index: -1
       })
     }
+
   }
 
 
@@ -58,6 +59,7 @@ export default class Main extends Component{
     this.setState({
       novaTarefa: e.target.value,
     });
+
   }
 
   handleDelete = (e, index) => {
@@ -85,15 +87,15 @@ export default class Main extends Component{
         <h1>Lista de Tarefas </h1>
 
       <Form
-        handleSubmit={this.handleSubmit}
-        handleChange={this.handleChange}
-        novaTarefa={novaTarefa}
+      handleSubmit={this.handleSubmit}
+      handleChange={this.handleChange}
+      novaTarefa={novaTarefa}
       />
 
       <Tarefas
-        tarefas={tarefas}
-        handleEdit={this.handleEdit}
-        handleDelete={this.handleDelete}
+      tarefas={tarefas}
+      handleEdit={this.handleEdit}
+      handleDelete={this.handleDelete}
       />
 
       </div>
