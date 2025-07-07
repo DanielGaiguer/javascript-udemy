@@ -7,7 +7,7 @@ export default function Login(){
   return (
   <Container>
     <Title>
-      Loginegrger
+      Login
       <small>oie</small>
     </Title>
     <Paragrafo>Lorem ipsum dolor sit amet.</Paragrafo>
