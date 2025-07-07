@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.h1`
-background: green;
-
+  background: green;
 
   small {
     font-size: 12pt;
@@ -12,6 +11,6 @@ background: green;
 `;
 
 export const Paragrafo = styled.p`
-  background: red;
+  font-size: 58px;
 `;
 
