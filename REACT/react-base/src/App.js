@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { ToastContainer } from "react-toastify"
-import { Provider } from 'react-redux'
+import { ToastContainer } from "react-toastify";
+import { Provider } from 'react-redux';
 
 import store from './store';
 import history from './services/history';

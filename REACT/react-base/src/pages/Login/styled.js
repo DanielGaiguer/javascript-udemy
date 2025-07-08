@@ -12,6 +12,6 @@ background: green;
 `;
 
 export const Paragrafo = styled.p`
-  background: red;
+  font-size: 48pt;
 `;
 
