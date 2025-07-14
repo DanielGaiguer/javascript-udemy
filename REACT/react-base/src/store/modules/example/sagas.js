@@ -4,13 +4,13 @@ import { toast } from 'react-toastify';
 import * as actions from './actions';
 import * as types from '../types';
 
-const requisicao = () => new Promise((resolve, reject) => {
+const requisicao = () => new Promise((resolve) => {
   setTimeout(() => {
-    reject();
-  }, 2000);
+    resolve();
+  }, 600);
 });
 
-function* exeampleRequest() {
+function* exampleRequest() {
   try {
     yield call(requisicao);
     yield put(actions.clicaBotaoSuccess());
@@ -21,5 +21,5 @@ function* exeampleRequest() {
 }
 
 export default all([
-  takeLatest(types.BOTAO_CLICADO_REQUEST, exeampleRequest),
+  takeLatest(types.BOTAO_CLICADO_REQUEST, exampleRequest),
 ]);
