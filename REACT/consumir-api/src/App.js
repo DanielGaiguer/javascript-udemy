@@ -12,8 +12,8 @@ import Routes from './routes';
 
 function App() {
   return (
-    <Provider store={store}>{/*Vai usar o redux, onde tem varias funcionalidades*/}
-      <PersistGate persistor={persistor}>{/*Vai usar o persistor, que ira guardar o estado da aplicacao */}
+    <Provider store={store}>{/*Pasta aonde contem todos os reducers, sagas , essa tag e necessaria para identificar todos este elemento e conectalos com toda a aplicacao, e o ponto central para eles funcionarem, aonde eles vao se encontrar por padrao*/}
+      <PersistGate persistor={persistor}>{/*Vai usar o persistor, que ira guardar tudo que tiver dentro dessa chave persistor importada*/}
         <Router history={history}>{/*Vai usar o history, para gerenciar os caminhos e o historico dos caminhos do usuario */}
           <Header />{/*Componente padrao de cabecalho */}
           <Routes />{/*Todas as possiveos rotas da aplicacao*/}
