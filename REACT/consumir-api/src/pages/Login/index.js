@@ -2,13 +2,16 @@ import React from "react";
 import { toast } from 'react-toastify';
 import { isEmail } from "validator";
 import { useDispatch } from "react-redux";
+import { get } from 'lodash';
 
 import { Container } from "../../styles/GlobalStyles";
 import { Form } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 
-export default function Login(){
+export default function Login(props){//Este props veio do redirect, aonde tem o state
   const dispatch = useDispatch();//Dispatch para disparar acoes para o reducer e o saga
+
+  const prevPath = get(props, 'location.state.prevPath', '/');//Vai pegar a rota anterior do usuario, dentro das propriedades enviadas (state) no redirect, com o prevPath
 
   const [email, setEmail] = React.useState('');//Seta o email no estado, e a funcao setEmail para mudar o valor do estado, valor padrao sendo uma string vazia
   const [password, setPassword] = React.useState('');//Seta a senha no estado, com a funcao setPassword para setar o valor do estado, valor padrao como uma string vazia
@@ -30,7 +33,17 @@ export default function Login(){
 
     if(formErrors) return;
 
-    dispatch(actions.loginRequest({email, password}));//Dispara puxando pelas actions a login Request, la nas actions ela vai retornar um type, e um payload, que neste caso e o email e o password, a partir desse dispatch o reducer e o saga, que a partir do type vai reconhecer a acao, o papel ddo reduicer e trocar e setar o estado global da aplicacao, ja do saga vai ser fazer a requisicao da API. Para continuar a explicacao va ate as actions que estao sendo importadas.
+    dispatch(actions.loginRequest({email, password, prevPath}));//Dispara puxando pelas actions a login Request, la nas actions ela vai retornar um type, e um payload, que neste caso e o email e o password, a partir desse dispatch o reducer e o saga, que a partir do type vai reconhecer a acao, o papel ddo reduicer e trocar e setar o estado global da aplicacao, ja do saga vai ser fazer a requisicao da API. Para continuar a explicacao va ate as actions que estao sendo importadas. O prevPath, vai pegar qual foi a pagina que o usuario estava tentando acessar antes de ser redirecionado para a pagina de login.
+    //dispatch({ type: 'LOGIN_REQUEST' })
+    // ↓
+    //saga (intercepta com takeLatest/takeEvery) _Caso ela exista, se nao existir, ela pula direto para o reducer
+    // ↓
+    //faz a lógica (ex: API, validações, delay)
+    // ↓
+    //put({ type: 'LOGIN_SUCCESS' })
+    // ↓
+    //reducer (executa e atualiza o state)
+
   };
 
   return (
