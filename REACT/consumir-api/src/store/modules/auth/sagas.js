@@ -42,23 +42,23 @@ function* registerRequest({ payload }) {
       });
       toast.success('Conta alterada com sucesso!');
       yield put(actions.registerUpdatedSuccess({ nome, email, password }));//Apos tudo dar certo mandamos o reducer de sucesso, que jogara os dados atualizados enviados pelo payload, ele ira pegar estes dados, jogar dentro do estado global, e tirar o componente de Loading colocado pelo request la no reducer
-    } else {
+    } else {//Se caso nao tiver um Id existente, ele ira reconhecer que o usuario nao esta tentando atualizar as informacoes, mas sim criando um novo user, assim ira carregar a pagina post correta para criacao de usuario
       yield call(axios.post, '/users', {
         email,
         nome,
         password: password,
       });
       toast.success('Conta criada com sucesso!');
-      yield put(actions.registerCreatedSuccess({ nome, email, password }));
-      history.push('/login');
+      yield put(actions.registerCreatedSuccess({ nome, email, password }));//Apos isso, vai chamar o reducer para setar todas as informacoes do usuario dentro do estado global da aplicacao
+      history.push('/login');//Vai redirecionar o usuario para fazer login
     }
   }catch(e) {
     const errors = get(e, 'reponse.data.errors', []);
     const status = get(e, 'status', 0);
 
-    if(status === 401){
+    if(status === 401){//Este erro e um erro enviado pela propria API, onde ele exige que o usuario faca login novamente, apos alterar o email, o token dado pelo login e diferente, e vai ser dado erro 401 por causa do token
       toast.error('Você precisa fazer login novamente');
-      yield put(actions.loginFailure());
+      yield put(actions.loginFailure());//Vai usar este reducer para apagar as informacoes do usuario do estado global
       return history.push('/login');
     }
 

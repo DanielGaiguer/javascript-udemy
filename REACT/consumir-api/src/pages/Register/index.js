@@ -11,6 +11,7 @@ import * as actions from '../../store/modules/auth/actions';
 export default function Register(){
   const dispatch = useDispatch();
 
+  //Vai pegar todos os dados do state do reducer
   const id = useSelector(state => state.auth.user.id);
   const nomeStored = useSelector(state => state.auth.user.nome);
   const emailStored = useSelector(state => state.auth.user.email);
@@ -20,11 +21,11 @@ export default function Register(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  React.useEffect(() => {
-    if(!id) return;
+  React.useEffect(() => {//Apos todos os elementos forem carregados
+    if(!id) return;//Vai verificar se o usuario esta logado ou nao, pelo id dentro do state
 
-    setNome(nomeStored);
-    setEmail(emailStored);
+    setNome(nomeStored);//Vai setar o nome pelo nome dentro do reducer
+    setEmail(emailStored);//Mesma coisa com o email
   }, [emailStored, id, nomeStored]);
 
   async function handleSubmit(e) {
