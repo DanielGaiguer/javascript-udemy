@@ -7,13 +7,18 @@ import { Container} from "../../styles/GlobalStyles";
 import { AlunoContainer, ProfilePicture  }  from "./styled";
 import axios from '../../services/axios';
 
+import Loading from '../../components/Loading';
+
 export default function Alunos(){
   const [alunos, setAlunos] = useState([]);//Significa que o estado de alunos, vai ser setado o valor pela funcao setAlunos, e o valor padrao desta variavel e um array vazio
+  const [isLoading, setIsLoading] = useState(false);//Vai manipular o estado para saber se esta carregando ou nao, para apresentar visualmente
 
   useEffect(() => {//Vai ser chamado assim que a pagina for carregada, e um react hook
     async function getData() {//Funcao para pegar dados da API com o axios
+      setIsLoading(true);//Antes de iniciar a requisicao, vai setar como true, esta carregando
       const response = await axios.get('/alunos');//O IP da API ja esta setado, e dai ele vai pegar os dados dessa api com /alunos
       setAlunos(response.data);//Esta funcao vai setar automaticamente os dados do API dentro de alunos com a funcao a setAlunos
+      setIsLoading(false);//Apos finalizar a requisicao, vai setar como false
     }
 
     getData();//Chama automaticamente a funcao para pegar dados, assim que todoso o componente da pagina for carregado
@@ -21,6 +26,8 @@ export default function Alunos(){
 
   return (
     <Container>
+      <Loading isLoading={isLoading} />
+
       <h1>Alunos</h1>
 
       <AlunoContainer>
