@@ -20,7 +20,7 @@ function* loginRequest({ payload }) {//Aqui o Saga vai fazer a chamada para a AP
   } catch(e) {
     toast.error('Usuario ou senha Inválidos.');
 
-    yield put(actions.loginFailure);//Vai lancar a funcao de erro ao reducer, caso tenha algum problema no meion do caminho
+    yield put(actions.loginFailure());//Vai lancar a funcao de erro ao reducer, caso tenha algum problema no meion do caminho
   }
 }
 
@@ -30,9 +30,53 @@ function persistRehydrate({ payload }) {//O parâmetro payload contém os dados 
   axios.defaults.headers.Authorization = `Bearer ${token}`;//Vai colocar o token dentro do cabecalho de todas as requisicoes axios, isso ocorrera todas as vezes que o usuario resetar a pagina
 };
 
+function* registerRequest({ payload }) {
+  const { id, nome, email, password } = payload;
+
+  try{
+    if (id) {//Vai verificar se dentro do payload, onde tem todo o estado do usuario, existe um ID, se ele existir quer dizer que o usuario esta logado, caso ele esteja logado, o axios vai fazer a requisicao para atualizar os dados do usuario, se nao, o axios vai fazer a requisicao para criar um novo usuario na aplicacao
+      yield call(axios.put, '/users', {
+        email,
+        nome,
+        password: password || undefined,//caso o usuario nao tenha mandado a senha para atualizar os dados, nos vamos mandar como undefined, e a API ira lidar com isso
+      });
+      toast.success('Conta alterada com sucesso!');
+      yield put(actions.registerUpdatedSuccess({ nome, email, password }));//Apos tudo dar certo mandamos o reducer de sucesso, que jogara os dados atualizados enviados pelo payload, ele ira pegar estes dados, jogar dentro do estado global, e tirar o componente de Loading colocado pelo request la no reducer
+    } else {
+      yield call(axios.post, '/users', {
+        email,
+        nome,
+        password: password,
+      });
+      toast.success('Conta criada com sucesso!');
+      yield put(actions.registerCreatedSuccess({ nome, email, password }));
+      history.push('/login');
+    }
+  }catch(e) {
+    const errors = get(e, 'reponse.data.errors', []);
+    const status = get(e, 'status', 0);
+
+    if(status === 401){
+      toast.error('Você precisa fazer login novamente');
+      yield put(actions.loginFailure());
+      return history.push('/login');
+    }
+
+    if (errors.length > 0) {
+      errors.map(error => toast.error(error));
+    } else {
+      toast.error('Erro desconhecido');
+    }
+
+    yield put(actions.registerFailure());//Caso tenha dado alguma falha no caminho, vamos chamar o reducer de falha
+  }
+}
+
 export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),//Ao chamar o disapatch, o saga vai ser executado inicialmente aqui, aonde ele vai vincular a acao que foi chamada, com a propria funcao do saga, aonde ele vai realizar a request da API
-  takeLatest(types.PERSIST_REHYDRATE, persistRehydrate)//types.PERSIST_REHYDRATE: é o tipo da ação disparada automaticamente pelo redux-persist quando o estado persistido da aplicação for reidratado (ou seja, carregado do armazenamento), Isso e necessario por que se o token for jogado no axios assim que a requisicao for feita, no caso no loginRequest, quando o usuario atualizar a pagina, a requisicao nao vai ser feita novamente, assim o token nao vai estar no redux persist, pedindo ao usuario para realizar login novamente, pois axios.defaults e resetado apos o reload.
+  takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),//types.PERSIST_REHYDRATE: é o tipo da ação disparada automaticamente pelo redux-persist quando o estado persistido da aplicação for reidratado (ou seja, carregado do armazenamento), Isso e necessario por que se o token for jogado no axios assim que a requisicao for feita, no caso no loginRequest, quando o usuario atualizar a pagina, a requisicao nao vai ser feita novamente, assim o token nao vai estar no redux persist, pedindo ao usuario para realizar login novamente, pois axios.defaults e resetado apos o reload.
 
   //Sempre que o redux-persist recupera os dados do localStorage, ele dispara a action PERSIST_REHYDRATE, que pode ser interceptada por uma saga (como persistRehydrate) para configurar coisas como o token no Axios.
+
+  takeLatest(types.REGISTER_REQUEST, registerRequest),
 ]);
