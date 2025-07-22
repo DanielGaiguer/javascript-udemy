@@ -16,7 +16,7 @@ function* loginRequest({ payload }) {//Aqui o Saga vai fazer a chamada para a AP
 
     toast.success('Login realizado com sucesso.');
 
-    history.push(payload.prevPath);
+    history.push(payload.prevPath);//Apos realizar o login, vai redirecionar o usuario a pagina que ele estava tentando acessar, guardada dentro de payload.prevPath
   } catch(e) {
     toast.error('Usuario ou senha Inválidos.');
 
@@ -33,6 +33,6 @@ function persistRehydrate({ payload }) {//O parâmetro payload contém os dados 
 export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),//Ao chamar o disapatch, o saga vai ser executado inicialmente aqui, aonde ele vai vincular a acao que foi chamada, com a propria funcao do saga, aonde ele vai realizar a request da API
   takeLatest(types.PERSIST_REHYDRATE, persistRehydrate)//types.PERSIST_REHYDRATE: é o tipo da ação disparada automaticamente pelo redux-persist quando o estado persistido da aplicação for reidratado (ou seja, carregado do armazenamento), Isso e necessario por que se o token for jogado no axios assim que a requisicao for feita, no caso no loginRequest, quando o usuario atualizar a pagina, a requisicao nao vai ser feita novamente, assim o token nao vai estar no redux persist, pedindo ao usuario para realizar login novamente, pois axios.defaults e resetado apos o reload.
-  
+
   //Sempre que o redux-persist recupera os dados do localStorage, ele dispara a action PERSIST_REHYDRATE, que pode ser interceptada por uma saga (como persistRehydrate) para configurar coisas como o token no Axios.
 ]);

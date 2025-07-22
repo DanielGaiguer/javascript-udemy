@@ -13,7 +13,7 @@ export default function (state = initialState, action) {//Apos ser chamado no di
       const newState = { ...state };
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
-      newState.user = action.user;
+      newState.user = action.payload.user;
       console.log('reducer', action.payload);//o payload e todos os dados sao enviados junto a action
       return newState;//O reducer sempre deve retornar o estado
     }
