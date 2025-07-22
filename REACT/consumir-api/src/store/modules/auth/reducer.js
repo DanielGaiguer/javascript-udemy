@@ -10,7 +10,7 @@ const initialState = {//Estado inicial e padrao da aplicacao, aqui vai ser setad
 export default function (state = initialState, action) {//Apos ser chamado no dispatch, o reducer inteiro vai ser chamado, e ira iniciar uma filtragem da acao que foi chamada, com o switch case, para saber qual vai ser o proximo passo
   switch(action.type) {
     case types.LOGIN_SUCCESS: {//Caso a action que foi mandada na chamada do reducer la no saga for essa, o codigo abaixo vai ser executado
-      const newState = { ...state };
+      const newState = { ...state };//A manipulacao do estado nunca deve ser direta
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
       newState.user = action.payload.user;
