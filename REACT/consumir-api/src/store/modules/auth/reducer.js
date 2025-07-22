@@ -13,13 +13,19 @@ export default function (state = initialState, action) {//Apos ser chamado no di
       const newState = { ...state };//A manipulacao do estado nunca deve ser direta
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
-      newState.user = action.payload.user;
-      console.log('reducer', action.payload);//o payload e todos os dados sao enviados junto a action
+      newState.user = action.payload.user;//o payload e todos os dados sao enviados junto a action
+      newState.isLoading = false;//Assim que o loggin for bem recebido, ele vai retirar o componente de isLoading
       return newState;//O reducer sempre deve retornar o estado
     }
 
-    case types.BOTAO_CLICADO_FAILURE: {
+    case types.LOGIN_FAILURE: {
       const newState = { ...initialState };
+      return newState;
+    }
+
+    case types.LOGIN_REQUEST: {
+      const newState = { ...state };
+      newState.isLoading = true;//Apenas quando a requisicao estiver sendo feita, o componente de isLoading vai ser true
       return newState;
     }
 

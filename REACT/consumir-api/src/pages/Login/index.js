@@ -1,17 +1,21 @@
 import React from "react";
 import { toast } from 'react-toastify';
 import { isEmail } from "validator";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get } from 'lodash';
 
 import { Container } from "../../styles/GlobalStyles";
 import { Form } from './styled';
 import * as actions from '../../store/modules/auth/actions';
+import Loading from '../../components/Loading';
+
 
 export default function Login(props){//Este props veio do redirect, aonde tem o state
   const dispatch = useDispatch();//Dispatch para disparar acoes para o reducer e o saga
 
   const prevPath = get(props, 'location.state.prevPath', '/');//Vai pegar a rota anterior do usuario, dentro das propriedades enviadas (state) no redirect, com o prevPath
+
+  const isLoading = useSelector(state => state.auth.isLoading);
 
   const [email, setEmail] = React.useState('');//Seta o email no estado, e a funcao setEmail para mudar o valor do estado, valor padrao sendo uma string vazia
   const [password, setPassword] = React.useState('');//Seta a senha no estado, com a funcao setPassword para setar o valor do estado, valor padrao como uma string vazia
@@ -48,6 +52,8 @@ export default function Login(props){//Este props veio do redirect, aonde tem o 
 
   return (
   <Container>
+    <Loading isLoading={isLoading} />
+
     <h1>Login</h1>
 
     <Form onSubmit={handleSubmit}>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 import { FaUserCircle, FaEdit, FaWindowClose } from 'react-icons/fa';
 
-import { Container} from "../../styles/GlobalStyles";
+import { Container } from "../../styles/GlobalStyles";
 import { AlunoContainer, ProfilePicture  }  from "./styled";
 import axios from '../../services/axios';
 
