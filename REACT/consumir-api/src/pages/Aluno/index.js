@@ -11,8 +11,8 @@ import { Form } from './styled';
 import Loading from '../../components/Loading';
 
 export default function Aluno({ match }){
-  const id = get(match, 'params.id', 0);
-  const [nome, setNome] = useState('');
+  const id = get(match, 'params.id', 0);//match e params.id estao dentro das props, que sao enviadas na chamada da pagina nas rotas
+  const [nome, setNome] = useState('');//Vai definir tudo no estado da aplicacao
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
   const [idade, setIdade] = useState('');
@@ -27,7 +27,7 @@ export default function Aluno({ match }){
 
       try{
         setIsLoading(true);
-        const { data } = await axios.get(`/alunos/${id}`);
+        const { data } = await axios.get(`/alunos/${id}`);//Vai tentar fazer a requisicao de edicao do usuario, enviando o id do mesmo
         const Foto = get(data, 'Fotos[0].url', '');
 
         setNome(data.nome);
@@ -43,7 +43,7 @@ export default function Aluno({ match }){
         const status = get(err, 'status', 0);
         const errors = get(err, 'response.data.errors', []);
 
-        if (status === 400) errors.map(error => toast.error(error));
+        if (status === 400) errors.map(error => toast.error(error));//Este erro e uma ma requisicao na API, onde o aluno que esta tentando ser buscado nao existe, redirecionando o usuario a home
         history.push('/');
       }
     }
