@@ -11,10 +11,10 @@ export default function Header(){
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
-  const handleLogout = e => {
+  const handleLogout = e => {//Botao para a disparada para deslogar o usuario
     e.preventDefault();
-    dispatch(actions.loginFailure());
-    history.push('/');
+    dispatch(actions.loginFailure());//Vai disparar a cao do saga e do reducer
+    history.push('/');//Vai puxar o usuarion para a home
   };
 
   return (
@@ -36,7 +36,7 @@ export default function Header(){
       </Link>
     )}
 
-    { isLoggedIn && <FaCircle size={24} color="#66ff33" />}
+    { isLoggedIn && <FaCircle size={24} color="#66ff33" /> }
   </Nav>
   );
 }

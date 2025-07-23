@@ -32,22 +32,22 @@ export default function Alunos(){
     e.currentTarget.remove();//Vai remover o elemento antigo
   };
 
-  const handleDelete = async (e, id, index) => {
-    e.persist();
+  const handleDelete = async (e, id, index) => {//Funcao para deletar alunos da API
+    e.persist();//Caso voce queira usar o evento dentro da funcao, e necessario usar essa linha para o react, neste caso nao usamos, mas se nos quissessemos usar o evento dentro de um onCLick ou onSubmit, pois ser um evento sintetico deveriamos usar esta linha
 
     try{
-      setIsLoading(true);
-      await axios.delete(`/alunos/${id}`);
+      setIsLoading(true);//Vai setar a tela de carregamento para o usuario
+      await axios.delete(`/alunos/${id}`);//Vai fazer a chamada na API, para deletar o aluno com aquele ID
 
-      const novosAlunos = [...alunos];
-      novosAlunos.splice(index, 1);
-      setAlunos(novosAlunos);
-      setIsLoading(false);
-      toast.success('Aluno excluído com sucesso.');
+      const novosAlunos = [...alunos];//vai copiar os alunos listados na tela
+      novosAlunos.splice(index, 1);//Vai retirar do array de alunos, 1 aluno com o index enviado na funcao, que sera o index do elemento dentro do array que o aluno esta listado
+      setAlunos(novosAlunos);//Vai setar os alunos com o array novo apos o aluno ser deletado
+      setIsLoading(false);//Vai retirar a tela de carregando
+      toast.success('Aluno excluído com sucesso.');//Vai mandar uma confirmacao de sucesso
     }catch (err) {
       const status = get(err, 'status', []);
 
-      if (status === 401 ) {
+      if (status === 401 ) {//Erro 401 e um erro mandado pela API< para informarmos que a acao nao pode ser realizada pois o usuario nao esta logado
         toast.error('Você precisa fazer login');
       } else {
         toast.error('Ocorreu um erro ao excluir aluno');
@@ -65,7 +65,7 @@ export default function Alunos(){
 
       <AlunoContainer>
         {alunos.map((aluno, index) => (
-          <div key={String(aluno.id)}>{/*Vai criar uma div por aluno, com a key do valor do ID do aluno*/}
+          <div key={String(aluno.id)}>{/*Vai criar uma div por aluno, com a key do valor do ID do aluno, Toda vez que você renderiza uma lista no React, é obrigatório passar uma prop key única para cada item. */}
             <ProfilePicture>
               {/*get do lodash, vai pegar dentro do aluno, Fotos[0].url, se caso nao ter o valor vai ser false, depois ele vai verificar, se o valor for true ele ira carregar a imagem, se nao ele vai colocar um icone padrao*/}
               { get(aluno, 'Fotos[0].url', false) ? (
@@ -91,7 +91,7 @@ export default function Alunos(){
               display="none"
               cursor="pointer"
               onClick={e => handleDelete(e, aluno.id, index)}
-            />
+            />{/*Envia o evento, o id do aluno que sera usado para apagalo na API< e o index que sera usado para apagalo na lista de alunos mostrada na tela */}
 
           </div>
         ))}
