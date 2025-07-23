@@ -12,7 +12,7 @@ export default function Header(){
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   const handleLogout = e => {
-    e.preventDeafault();
+    e.preventDefault();
     dispatch(actions.loginFailure());
     history.push('/');
   };
@@ -27,7 +27,7 @@ export default function Header(){
     </Link>
 
     { isLoggedIn ? (
-      <Link onclick={handleLogout} to="/logout">
+      <Link onClick={handleLogout} to="/logout">
         <FaPowerOff size={24} />
       </Link>
     ) : (
