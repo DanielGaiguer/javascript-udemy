@@ -1,4 +1,5 @@
 import * as types from '../types';
+import axios from '../../../services/axios';
 
 const initialState = {//Estado inicial e padrao da aplicacao, aqui vai ser setado tudo que posteriormente vai ser salvo no estado
   isLoggedIn: false,
@@ -19,6 +20,7 @@ export default function (state = initialState, action) {//Apos ser chamado no di
     }
 
     case types.LOGIN_FAILURE: {
+      delete axios.defaults.headers.Authorization;
       const newState = { ...initialState };
       return newState;
     }
