@@ -21,11 +21,11 @@ export default function Register(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  React.useEffect(() => {//Apos todos os elementos forem carregados
+  React.useEffect(() => {// é disparado automaticamente sempre que qualquer uma das variáveis emailStored, id ou nomeStored mudar.
     if(!id) return;//Vai verificar se o usuario esta logado ou nao, pelo id dentro do state
 
-    setNome(nomeStored);//Vai setar o nome pelo nome dentro do reducer
-    setEmail(emailStored);//Mesma coisa com o email
+    setNome(nomeStored);//Uma vez que o id está presente (indicando que o usuário está logado e os dados foram carregados), o nome e o e-mail armazenados no state global (nomeStored, emailStored) são copiados para o estado local do componente
+    setEmail(emailStored);
   }, [emailStored, id, nomeStored]);
 
   async function handleSubmit(e) {
