@@ -35,7 +35,7 @@ export default function Aluno({ match }){
       try{
         setIsLoading(true);
         const { data } = await axios.get(`/alunos/${id}`);//Vai tentar fazer a requisicao de edicao do usuario, enviando o id do mesmo
-        const Foto = get(data, 'Fotos[0].url', '');
+        const Foto = get(data, 'Fotos[0].url', '');//Caso ele tenha foto, ele ira setar no state
         setFoto(Foto);
 
         setNome(data.nome);
@@ -57,7 +57,7 @@ export default function Aluno({ match }){
     }
 
     getData();
-  }, [id]);
+  }, [id]);//Id neste caso e um paramentro para o UseEffect, caso ele nao exista o useEffect nao sera chamado
 
   const  handleSubmit = async e => {
     e.preventDefault();
@@ -146,8 +146,8 @@ export default function Aluno({ match }){
 
     {id && (
       <ProfilePicture>
-        {foto ? <img src="foto" alt={nome} /> : <FaUserCircle size={180} />}
-        <Link to={`/fotos/${id}`}>
+        {foto ? <img src={foto} alt={nome} /> : <FaUserCircle size={180} />} {/*Para exibir a foto do Aluno, caso nao exista sera um Icone */}
+        <Link to={`/fotos/${id}`}>{/*Link para a rota de edicao de foto do aluno */}
           <FaEdit size={24} />
         </Link>
       </ProfilePicture>
