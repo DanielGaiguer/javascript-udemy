@@ -117,7 +117,7 @@ export default function Aluno({ match }){
           altura,
         });
         toast.success('Aluno(a) criado(a) com sucesso.');
-        history.push(`aluno/${data.id}/edit`);
+        history.push(`aluno/${data.id}/edit`);//Apos criar o aluno ira direcionar o usuario para a pagina de edicao do mesmo
       }
 
       setIsLoading(false);
