@@ -91,7 +91,7 @@ export default function Aluno({ match }){
 
     if (formErrors) return;
 
-    try {
+    try {//Caso nao exista erros de validacao, vamos tentar criar/editar o aluno
       setIsLoading(true);
       if(id) {//Caso ja exista um id. nos estamos editando
         await axios.put(`/alunos/${id}`, {
@@ -104,7 +104,7 @@ export default function Aluno({ match }){
         });
         toast.success('Aluno(a) editado(a) com sucesso.');
       } else {//Caso ainda nao exista um Id nos estamos criando
-        const { data } = await axios.post(`/alunos/`, {
+        const { data } = await axios.post(`/alunos/`, {//Pegamos o data para pegar o Id do aluno, para redirecionarmos o usuario para a pagina de edicao apos a criacao do aluno
           nome,
           sobrenome,
           email,
@@ -128,7 +128,7 @@ export default function Aluno({ match }){
         toast.error('Erro desconhecido');
       }
 
-      if(status === 401 ) dispatch(actions.loginFailure());
+      if(status === 401 ) dispatch(actions.loginFailure());//Caso o erro seja 401, provavelmente o usuario esta com token expirado, entao redirecionamos ele para fazer o login novamente
 
       setIsLoading(false);
     }
