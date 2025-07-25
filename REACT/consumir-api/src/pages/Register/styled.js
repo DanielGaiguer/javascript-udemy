@@ -29,4 +29,5 @@ export const Form = styled.form`
 
 export const BotaoDelete = styled.button`
   margin-top: 15px;
+  display: ${(props) => props.display || 'block'};//Vai setar o display dele de acordo com as props, se nao tiver vai ser block
 `;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from 'react-toastify';
 import { isEmail } from "validator";
 import { useSelector, useDispatch } from "react-redux";
+import { FaExclamation } from 'react-icons/fa';
 
 import { Container } from "../../styles/GlobalStyles";
 import { Form, BotaoDelete } from './styled';
@@ -55,20 +56,27 @@ export default function Register(){
     dispatch(actions.registerRequest({ nome, email, password, id }));//Se nao, vai chamar o reducer e o saga, primeiro vai fazer a requisicao, la no saga, ela vai verificar se o usuario esta criando uma nova conta, ou editando uma existente,
   }
 
-  const handleDeleteUser = async (e) => {
+  const handleDeleteUser = async (e) => {//Funcao que ira deletar o usuario
     e.preventDefault();
     if (id) {
       try{
-        await axios.delete('/users');//Vai fazer a requisicao para deletar o usuario
+        await axios.delete('/users');//Vai fazer a requisicao para deletar o usuario, a partir do token, entao nao e necessario id nem nenhum parametro
         toast.success('Usuário deletado com sucesso.');
         dispatch(actions.loginFailure());//Vai deslogar o usuario
         history.push('/');
       } catch(e) {
         toast.error('Erro ao tentar deletar usuário.');
-        dispatch(actions.loginFailure());
+        dispatch(actions.loginFailure());//Vai deslogar o usuario
         history.push('/');
       }
     };
+  };
+
+  const handleDeleteAsk = e => {
+    e.preventDefault();
+    const exclamation = e.currentTarget.nextSibling;//Este nextSibling e o elemento irmao, que esta a direita, o proximo elemento do elemento que esta na variavel "e"
+    exclamation.style.display = 'block';//Vai trocar o atributo de none para block
+    e.currentTarget.remove();//Vai remover o elemento antigo
   };
 
 
@@ -112,7 +120,12 @@ export default function Register(){
 
       <button type="submit">{ id ? 'Salvar' : 'Criar conta'}</button>
 
-      { isLoggedIn && ( <BotaoDelete type="submit" onClick={handleDeleteUser}> Deletar </BotaoDelete>)}
+      { isLoggedIn && ( <BotaoDelete type="submit" onClick={e => handleDeleteAsk(e)}> Deletar </BotaoDelete>)}
+
+      { isLoggedIn && (
+        <BotaoDelete display="none" onClick={e => handleDeleteUser(e)}>
+          <FaExclamation size={16} color="#fff" > </FaExclamation>
+        </BotaoDelete>)}
 
     </Form>
   </Container>
