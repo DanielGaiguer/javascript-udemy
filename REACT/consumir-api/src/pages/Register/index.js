@@ -4,9 +4,11 @@ import { isEmail } from "validator";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Container } from "../../styles/GlobalStyles";
-import { Form } from './styled';
+import { Form, BotaoDelete } from './styled';
 import Loading  from "../../components/Loading";
 import * as actions from '../../store/modules/auth/actions';
+import axios from '../../services/axios';
+import history from '../../services/history';
 
 export default function Register(){
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ export default function Register(){
   const nomeStored = useSelector(state => state.auth.user.nome);
   const emailStored = useSelector(state => state.auth.user.email);
   const isLoading = useSelector(state => state.auth.isLoading);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -51,6 +54,22 @@ export default function Register(){
 
     dispatch(actions.registerRequest({ nome, email, password, id }));//Se nao, vai chamar o reducer e o saga, primeiro vai fazer a requisicao, la no saga, ela vai verificar se o usuario esta criando uma nova conta, ou editando uma existente,
   }
+
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    if (id) {
+      try{
+        await axios.delete('/users');//Vai fazer a requisicao para deletar o usuario
+        toast.success('Usuário deletado com sucesso.');
+        dispatch(actions.loginFailure());//Vai deslogar o usuario
+        history.push('/');
+      } catch(e) {
+        toast.error('Erro ao tentar deletar usuário.');
+        dispatch(actions.loginFailure());
+        history.push('/');
+      }
+    };
+  };
 
 
   return (
@@ -92,6 +111,9 @@ export default function Register(){
       </label>
 
       <button type="submit">{ id ? 'Salvar' : 'Criar conta'}</button>
+
+      { isLoggedIn && ( <BotaoDelete type="submit" onClick={handleDeleteUser}> Deletar </BotaoDelete>)}
+
     </Form>
   </Container>
   );

@@ -27,3 +27,6 @@ export const Form = styled.form`
   }
 `;
 
+export const BotaoDelete = styled.button`
+  margin-top: 15px;
+`;

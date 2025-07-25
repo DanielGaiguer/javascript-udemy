@@ -17,7 +17,7 @@ import * as actions from '../../store/modules/auth/actions';
 export default function Aluno({ match }){
   const dispatch = useDispatch();
 
-  const id = get(match, 'params.id', 0);//match e params.id estao dentro das props, que sao enviadas na chamada da pagina nas rotas
+  const id = get(match, 'params.id', '');//match e params.id estao dentro das props, que sao enviadas na chamada da pagina nas rotas
   const [nome, setNome] = useState('');//Vai definir tudo no estado da aplicacao
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
@@ -59,7 +59,7 @@ export default function Aluno({ match }){
     getData();
   }, [id]);//Id neste caso e um paramentro para o UseEffect, caso ele nao exista o useEffect nao sera chamado
 
-  const  handleSubmit = async e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     let formErrors = false;
 
