@@ -18,12 +18,13 @@ export default function Register(){
   const id = useSelector(state => state.auth.user.id);
   const nomeStored = useSelector(state => state.auth.user.nome);
   const emailStored = useSelector(state => state.auth.user.email);
-  const isLoading = useSelector(state => state.auth.isLoading);
+  const isLoadingStored = useSelector(state => state.auth.isLoading);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {// é disparado automaticamente sempre que qualquer uma das variáveis emailStored, id ou nomeStored mudar.
     if(!id) return;//Vai verificar se o usuario esta logado ou nao, pelo id dentro do state
@@ -60,11 +61,14 @@ export default function Register(){
     e.preventDefault();
     if (id) {
       try{
+        setIsLoading(true);
         await axios.delete('/users');//Vai fazer a requisicao para deletar o usuario, a partir do token, entao nao e necessario id nem nenhum parametro
+        setIsLoading(false);
         toast.success('Usuário deletado com sucesso.');
         dispatch(actions.loginFailure());//Vai deslogar o usuario
         history.push('/');
       } catch(e) {
+        setIsLoading(false);
         toast.error('Erro ao tentar deletar usuário.');
         dispatch(actions.loginFailure());//Vai deslogar o usuario
         history.push('/');
@@ -82,7 +86,7 @@ export default function Register(){
 
   return (
   <Container>
-    <Loading isLoading={isLoading} />
+    <Loading isLoading={isLoadingStored || isLoading} />
 
     <h1>{id ? 'Editar dados' : 'Crie sua conta'}</h1>
 
