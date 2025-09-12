@@ -1,11 +1,15 @@
 
 
 const texto = `
-joão gosta muito de programar.  
-O melhor amigo de joão se chama Pedro.  
-Na escola, joão sempre sentava na primeira carteira.  
-Certa vez, a professora perguntou: "joão, você fez a lição de casa?"  
-Alguns colegas chamavam joão de "gênio da matemática".  
+Joao e Maria eram grandes amigos.  
+Um dia, Joao encontrou Maria na praça.  
+"Oi Maria!", disse Joao sorrindo.  
+Mas no meio da conversa apareceu João, o mais quieto do grupo.  
+Joaaaaao não parava de falar e Maria ria sem parar.  
+Alguns chamavam Mariaaaaa só para brincar.  
+Certa vez, Joao escreveu errado o nome e ficou assim: Jooao.  
+E na festa da escola, Maria e Joaaaaaaooooooo dançaram juntos.  
+ 
 `
 
 
