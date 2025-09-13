@@ -29,12 +29,13 @@ const arquivos = [
   'anotacoes.txT'
 ]
 
-const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz ⚡ ☯ 0123456789 ☯'
+const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz © ¡ 0123456789 ¡'
 
 const html = '<p>Ola mundo</p> <p>Ola de novo</p> <div>Sou uma div!</div>'
 
 module.exports = {
     texto,
     arquivos,
-    html
+    html,
+    alfabeto
 }
