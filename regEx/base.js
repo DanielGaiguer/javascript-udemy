@@ -36,11 +36,7 @@ const html = '<p>Ola mundo</p> <p>Ola de novo</p> <div>Sou uma div!</div>'
 const cpfs = `
 094.860.869-23 917.882.779-53
 `
-const ips = `
-//0.0.0.0
-255.255.255.255
-10.5.12.1
-`
+const ips = `0.0.0.0 255.255.255.25510.5.12.1`
 
 module.exports = {
     texto,
