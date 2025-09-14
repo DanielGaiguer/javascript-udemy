@@ -3,7 +3,7 @@ const { alfabeto } = require('./base')
 // [abc] -> Connjunto [^] -> Negacao
 // [0-9] 
 // [min-max] -> Range, com minimo e maximo
-// [^min-max] -> tudo menos isso
+// [^min-max] -> tudo menos isso  
 
 console.log(alfabeto)
 console.log(alfabeto.match(/[0-9]+/g))
