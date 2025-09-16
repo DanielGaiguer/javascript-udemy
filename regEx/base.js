@@ -38,11 +38,18 @@ const cpfs = `
 `
 const ips = `0.0.0.0 255.255.255.25510.5.12.1`
 
+const cpfs2 = `
+094.860.869-23
+917.882.779-53
+040.348.989-09
+`
+
 module.exports = {
     texto,
     arquivos,
     html,
     alfabeto,
     cpfs,
-    ips
+    ips, 
+    cpfs2
 }
