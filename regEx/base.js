@@ -44,10 +44,18 @@ const cpfs2 = `
 040.348.989-09
 `
 
+const html2 = `<p 
+data-teste='teste' 
+class="teste teste">
+Ola mundo
+</p> <p>Ola de novo</p>
+ <div>Sou uma div!</div>`
+
 module.exports = {
     texto,
     arquivos,
     html,
+    html2,
     alfabeto,
     cpfs,
     ips, 
